@@ -1,8 +1,10 @@
 package application;
 
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.Instant;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -15,8 +17,9 @@ import entities.enums.OrderStatus;
 public class Program {
 
 	public static void main(String[] args) throws ParseException {
-		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-		
+		 DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy").withZone(ZoneId.systemDefault());
+		 DateTimeFormatter fmt1 = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+		 
 		Locale.setDefault(Locale.US);
 		Scanner scan = new Scanner(System.in);
 		
@@ -26,13 +29,13 @@ public class Program {
 		System.out.print("Email: ");
 		String email = scan.nextLine();
 		System.out.print("Birth date (DD/MM/YYYY): ");
-		Date birthDate = sdf.parse(scan.next());
+		LocalDate birthDate = LocalDate.parse(scan.next(), fmt1);
 		Client client = new Client(clientName, email, birthDate);
 		
 		System.out.println("Enter order data: ");
 		System.out.print("Status: ");
 		String status = scan.next().toUpperCase();
-		Order order = new Order(new Date(), OrderStatus.valueOf(status), client);
+		Order order = new Order(Instant.now(), OrderStatus.valueOf(status), client);
 		
 		System.out.print("How many items to this order? ");
 		int n = scan.nextInt();

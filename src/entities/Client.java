@@ -1,20 +1,22 @@
 package entities;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 
 public class Client {
 	
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	 private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy");
+
 	
 	private String name;
 	private String email;
-	private Date birthDate;
+	private LocalDate birthDate;
 	
 	public Client() {
 	}
 
-	public Client(String name, String email, Date birthDate) {
+	public Client(String name, String email, LocalDate birthDate) {
 		this.name = name;
 		this.email = email;
 		this.birthDate = birthDate;
@@ -36,15 +38,15 @@ public class Client {
 		this.email = email;
 	}
 
-	public Date getBirthDate() {
+	public LocalDate getBirthDate() {
 		return birthDate;
 	}
 
-	public void setBirthDate(Date bithDate) {
+	public void setBirthDate(LocalDate bithDate) {
 		this.birthDate = bithDate;
 	}
 	public String toString() {
-		return name + " (" + sdf.format(birthDate) + ") - " + email;
+		return name + " (" + fmt.format(birthDate) + ") - " + email;
 	}
 	
 	

@@ -1,6 +1,8 @@
 package entities;
 
-import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -9,10 +11,11 @@ import entities.enums.OrderStatus;
 
 public class Order {
 	
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+	private static DateTimeFormatter fmt = DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm:ss").withZone(ZoneId.systemDefault());
+
 	
 	
-	private Date moment;
+	private Instant moment;
 	private OrderStatus status;
 	
 	private Client client;
@@ -21,17 +24,17 @@ public class Order {
 	public Order() {
 	}
 
-	public Order(Date moment, OrderStatus status, Client client) {
+	public Order(Instant moment, OrderStatus status, Client client) {
 		this.moment = moment;
 		this.status = status;
 		this.client = client;
 	}
 
-	public Date getMoment() {
+	public Instant getMoment() {
 		return moment;
 	}
 
-	public void setMoment(Date moment) {
+	public void setMoment(Instant moment) {
 		this.moment = moment;
 	}
 
@@ -69,7 +72,7 @@ public class Order {
 		StringBuilder sb = new StringBuilder();
 		//Dados do cliente
 		sb.append("ORDER SUMMARY:\n");
-		sb.append("Order moment: " + sdf.format(getMoment()) + "\n");
+		sb.append("Order moment: " + fmt.format(getMoment()) + "\n");
 		sb.append("Order Status: " + status.toString().substring(0, 1).toUpperCase() + status.toString().substring(1).toLowerCase() + "\n");
 		sb.append("Client: " + client + "\n");
 		sb.append("Order items:\n");
